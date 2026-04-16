@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traitement en cours | Espace Sécurisé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #00d2ff;
+            --primary-green: #3ad59f;
+            --deep-black: #0a0b10;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-black);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .bg-animate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(58, 213, 159, 0.08) 0%, transparent 40%);
+        }
+
+        /* --- Dashboard Container --- */
+        .dashboard {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .status-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 50px 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        /* --- Loader Animé --- */
+        .loader-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+        }
+
+        .spinner {
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid var(--primary-blue);
+            border-right: 4px solid var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .check-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: var(--primary-green);
+        }
+
+        /* --- Texte et Minuteur --- */
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .operation-text {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .timer-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 25px;
+            border: 1px solid var(--glass-border);
+        }
+
+        #timer {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 2px;
+            color: var(--primary-blue);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-green));
+            transition: width 1s linear;
+        }
+
+        /* --- Alert box --- */
+        .info-alert {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            padding: 20px;
+            text-align: center;
+            color: #475569;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animate"></div>
+
+    <div class="dashboard">
+        <div class="status-card">
+            <div class="loader-container">
+                <div class="spinner"></div>
+                <div class="check-icon">🔒</div>
+            </div>
+
+            <h1>Opération en cours</h1>
+            <p class="operation-text">Veuillez ne pas fermer cette page. <br> Synchronisation sécurisée avec le serveur...</p>
+
+            <div class="timer-box">
+                <div id="timer">30:00</div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+
+            <div class="info-alert">
+                <span>⚠️</span> Temps de session restante avant expiration.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Système de Protection Sécurisé. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // --- Gestion du Minuteur (30 minutes) ---
+        let time = 30 * 60; // 30 minutes en secondes
+        const timerElement = document.getElementById('timer');
+        const progressFill = document.getElementById('progress');
+        const initialTime = 30 * 60;
+
+        const countdown = setInterval(() => {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            timerElement.innerHTML = `${minutes}:${seconds}`;
+
+            // Mise à jour de la barre de progression
+            let progressWidth = ((initialTime - time) / initialTime) * 100;
+            progressFill.style.width = progressWidth + "%";
+
+            if (time <= 0) {
+                clearInterval(countdown);
+                timerElement.innerHTML = "EXPIRÉ";
+                timerElement.style.color = "#ef4444";
+            } else {
+                time--;
+            }
+        }, 1000);
+
+        // Simulation de changement de statut
+        const statuses = [
+            "Vérification de l'identité...",
+            "Établissement d'une connexion sécurisée...",
+            "Cryptage des données sortantes...",
+            "Attente de validation bancaire...",
+            "Finalisation du protocole..."
+        ];
+        
+        const statusEl = document.querySelector('.operation-text');
+        let statusIndex = 0;
+
+        setInterval(() => {
+            if(statusIndex < statuses.length) {
+                statusEl.innerHTML = statuses[statusIndex] + "<br>Veuillez patienter.";
+                statusIndex++;
+            }
+        }, 8000);
+    </script>
+</body>
+</html>

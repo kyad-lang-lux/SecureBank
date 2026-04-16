@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Bancaire Sécurisé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #00d2ff;
+            --primary-green: #3ad59f;
+            --deep-black: #0a0b10;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-black);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- Animation d'arrière-plan --- */
+        .bg-animate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(58, 213, 159, 0.1) 0%, transparent 40%);
+        }
+
+        /* --- Header & Nav --- */
+        header {
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-nav {
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-help {
+            color: #94a3b8;
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-help:hover {
+            background: var(--glass-bg);
+            color: white;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: var(--deep-black);
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+        }
+
+        .btn-login:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+        }
+
+        /* --- Main Content --- */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 50px;
+        }
+
+        /* --- Grille de Banques --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+            width: 100%;
+        }
+
+        .bank-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bank-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--primary-blue);
+            box-shadow: 0 20px 40px rgba(0, 210, 255, 0.15);
+        }
+
+        .bank-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+        }
+
+        .bank-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .btn-enter {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--primary-green);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+        }
+
+        .bank-card:hover .btn-enter {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Footer --- */
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            text-align: center;
+            color: #475569;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 20px; }
+            .hero h1 { font-size: 2rem; }
+            .grid-container { grid-template-columns: 1fr; max-width: 350px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animate"></div>
+
+    <header>
+        <div class="brand">Secure<span>Bank</span></div>
+        <nav class="nav-buttons">
+            <a href="#" class="btn-nav btn-help">Aide</a>
+            <a href="#" class="btn-nav btn-login">Connexion</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Accès aux comptes</h1>
+            <p>Portail sécurisé de transfert international. Choisissez votre banque partenaire pour continuer.</p>
+        </section>
+
+        <div class="grid-container">
+            <a href="bnp.html" class="bank-card">
+                <img src="bnp.png" alt="BNP Paribas" class="bank-logo">
+                <span class="bank-name">BNP Paribas</span>
+                <span class="btn-enter">Accéder au portail →</span>
+            </a>
+
+            <a href="sg.html" class="bank-card">
+                <img src="sg.png" alt="Société Générale" class="bank-logo">
+                <span class="bank-name">Société Générale</span>
+                <span class="btn-enter">Accéder au portail →</span>
+            </a>
+
+            <a href="mabanque.html" class="bank-card">
+                <img src="ma-banque.webp" alt="Ma Banque" class="bank-logo">
+                <span class="bank-name">Ma Banque</span>
+                <span class="btn-enter">Accéder au portail →</span>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Protection des Données Bancaires. Cryptage AES-256 activé.</p>
+    </footer>
+
+</body>
+</html>

