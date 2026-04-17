@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre d'Aide | SecureBank</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #00d2ff;
+            --primary-green: #3ad59f;
+            --deep-black: #0a0b10;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-black);
+            color: white;
+            line-height: 1.6;
+        }
+
+        .bg-animate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.05) 0%, transparent 40%);
+        }
+
+        header {
+            padding: 30px 10%;
+            text-align: center;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 { font-size: 2.2rem; margin-bottom: 40px; text-align: center; }
+
+        /* --- Accordion Style --- */
+        .faq-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-blue);
+            transform: scale(1.01);
+        }
+
+        .faq-item h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        /* --- Contact Section --- */
+        .contact-box {
+            margin-top: 50px;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(58, 213, 159, 0.1));
+            border: 1px solid var(--primary-green);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 40px;
+            text-decoration: none;
+            color: white;
+            border: 1px solid var(--glass-border);
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: white;
+            color: black;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #475569;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animate"></div>
+
+    <header>
+        <div class="brand">Secure<span>Bank</span></div>
+    </header>
+
+    <div class="container">
+        <h1>Comment pouvons-nous vous aider ?</h1>
+
+        <div class="faq-item">
+            <h3><span>01.</span> Où trouver mon identifiant ?</h3>
+            <p>Votre identifiant à 11 chiffres se trouve sur votre relevé de compte papier ou sur votre contrat de banque à distance. Il est unique pour chaque client.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3><span>02.</span> Pourquoi ma session est-elle limitée à 30 minutes ?</h3>
+            <p>Par mesure de sécurité, nous limitons la durée de connexion pour éviter tout accès non autorisé à vos données bancaires en cas d'inactivité.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3><span>03.</span> Que faire si j'ai oublié mon code secret ?</h3>
+            <p>Si vous ne parvenez pas à vous souvenir de votre code à 6 chiffres, veuillez contacter votre conseiller en agence pour demander une réinitialisation sécurisée.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3><span>04.</span> Mes données sont-elles protégées ?</h3>
+            <p>Toutes les transmissions sont cryptées via le protocole SSL/TLS (AES-256). Nous n'enregistrons aucune donnée sensible sur nos serveurs sans votre accord explicite.</p>
+        </div>
+
+        <div class="contact-box">
+            <h3>Encore besoin d'aide ?</h3>
+            <p>Nos conseillers sont disponibles 24h/7j par téléphone au <strong>3639</strong> (appel non surtaxé).</p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="btn-back">← Retour à l'accueil</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Centre d'Assistance Sécurisé. Cryptage de bout en bout.</p>
+    </footer>
+
+</body>
+</html>
